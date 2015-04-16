@@ -9,15 +9,18 @@ div.indices(ng-controller='IndicesCtrl')
 
   .active-index
     .index-controls
-      a.collapse-all(ng-click="collapseActiveIndex()") Collapse
-      span /
-      a.expand-all(ng-click="expandActiveIndex()") Expand
-      span All
+      //
+        a(ng-repeat="(k, v) in sortedActiveIndex | orderBy: k", ng-click="goToAlpha(k)", class="go-to-alpha") {{k}}
+      //
+        a.collapse-all(ng-click="collapseActiveIndex()") Collapse
+        span /
+        a.expand-all(ng-click="expandActiveIndex()") Expand
+        span All Letters
     .index-meta
       h3.index-title {{activeIndex.title}}
       .index-description {{activeIndex.description}}
     ol.index-listing(ng-style="sliderWidth")
-      li.alpha-listing(ng-repeat="(k, v) in sortedActiveIndex | orderBy: k")
+      li.alpha-listing(ng-repeat="(k, v) in sortedActiveIndex | orderBy: k", id="target-{{k}}")
         span {{k.toUpperCase()}}.
         ul(class="letter-listing")
           li(ng-repeat="item in v", ng-class="{'active': activeItem == item}")

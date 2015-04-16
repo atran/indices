@@ -55,7 +55,10 @@ App.classy.controller
 
   sortActiveIndex: ->
     _.groupBy(@$.activeIndex.items, (item) ->
-      item.text[0]
+      str = item.text[0].toLowerCase()
+      if not (str.length is 1 && str.match(/[a-z]/i))
+        str = "*"
+      str
     )
 
   collapseActiveIndex: ->
@@ -79,6 +82,9 @@ App.classy.controller
     @$.activeItem.subitems.push(newSubItem)
 
     @$.newSubItem = ""
+
+  goToAlpha: (e) -> 
+    $("#target-" + e).velocity("scroll", container: $(".active-index")) 
 
   addLink: ->
     newLink = @$.newLink.trim()
