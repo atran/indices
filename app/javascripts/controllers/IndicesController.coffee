@@ -7,43 +7,56 @@ App.classy.controller
   init: ->
     @$.indices = []
     @$.activeIndex = null
+    @$.sortedActiveIndex = null
     @$.activeItem = null
 
     @index1 = 
       title: "This is an example title."
-      items: [
-        text: "learn angular"
-        links: []
-        subitems: []
-      ,
-        text: "build an angular app"
-        links: []
-        subitems: []
-      ]
+      description: "This is the an example description."
+      items: []
 
     @$.indices.push(@index1)
 
   watch: 
     '{object}indices': '_onIndicesChange'
+    '{object}activeIndex': '_onActiveIndexChange'
 
   _onToDoChange: (newVal, oldVal) ->
     @$.remaining = @filterFilter(@indices, {done: false}).length
 
+  _onActiveIndexChange: () ->
+    @$.sortedActiveIndex = @sortActiveIndex()
+
   setActiveIndex: (index) ->
     @$.activeIndex = index
     @$.activeItem = null
+    @$.sortedActiveIndex = @sortActiveIndex()
 
   setActiveItem: (item) ->
-    @$.activeItem = item
+    @$.activeItem = _.findWhere(@$.activeIndex.items, item)
 
   addIndex: ->
     newIndex = @$.newIndex.trim()
+    newIdxDesc = @$.newIdxDesc.trim()
     if !newIndex.length then return
     @$.indices.push
       title: newIndex
+      description: newIdxDesc
       items: []
 
     @$.newIndex = ""
+    @$.newIdxDesc = ""
+
+  sortActiveIndex: ->
+    _.groupBy(@$.activeIndex.items, (item) ->
+      item.text[0]
+    )
+
+  collapseActiveIndex: ->
+    $(".letter-listing").slideUp()
+
+  expandActiveIndex: ->
+    $(".letter-listing").slideDown()
 
   addItem: ->
     newItem = @$.newItem.trim()
@@ -52,7 +65,6 @@ App.classy.controller
       text: newItem
       links: []
       subitems: []
-
     @$.newItem = ""
 
   addSubItem: ->

@@ -7,12 +7,22 @@ div.indices(ng-controller='IndicesCtrl')
           {{index.title}}&nbsp;&rarr;
 
   .active-index(ng-show="activeIndex !== null")
+    .index-controls
+      a.collapse-all(ng-click="collapseActiveIndex()") Collapse
+      span /
+      a.expand-all(ng-click="expandActiveIndex()") Expand
+      span All
+    .index-description
+      {{activeIndex.description}}
     ol.index-listing
-      li(ng-repeat='item in activeIndex.items | orderBy: "text"', ng-class="{'active': activeItem == item}") 
-        p(ng-click='setActiveItem(item)') {{item.text}}&nbsp;&rarr;
-        ol.subindex-listing
-          li(ng-repeat='subitem in item.subitems | orderBy')
-            p {{subitem}}
+      li.alpha-listing(ng-repeat="(k, v) in sortedActiveIndex | orderBy: 'k'")
+        span {{k.toUpperCase()}}.
+        ul(class="letter-listing")
+          li(ng-repeat="item in v")
+            p(ng-click='setActiveItem(item)') {{item.text}}&nbsp;&rarr;
+            ol.subindex-listing
+              li(ng-repeat='subitem in item.subitems | orderBy')
+                p {{subitem}}
 
   .active-item(ng-show="activeItem !== null")
     ul.url-listing
@@ -22,13 +32,14 @@ div.indices(ng-controller='IndicesCtrl')
   .forms
     form#add-index.add-something(ng-submit='addIndex()')
       input(type='text', ng-model='newIndex', placeholder='Add an index title', autofocus)
-      input(type='submit', value='+')
+      textarea(ng-model='newIdxDesc', placeholder="Provide a description (optional)")
+      input(type='submit', value='add')
     form#add-item.add-something(ng-submit='addItem()', ng-show="activeIndex !== null")
       input(type='text', ng-model='newItem', placeholder='Add an index')
-      input(type='submit', value='+')
+      input(type='submit', value='add')
     form#add-subitem.add-something(ng-submit='addSubItem()', ng-show="activeItem !== null")
       input(type='text', ng-model='newSubItem', placeholder='Add a subindex')
-      input(type='submit', value='+')
+      input(type='submit', value='add')
     form#add-link.add-something(ng-submit='addLink()', ng-show="activeItem !== null")
       input(type='url', ng-model='newLink', placeholder='Add a URL')
-      input(type='submit', value='+')
+      input(type='submit', value='add')

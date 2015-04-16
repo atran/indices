@@ -6,13 +6,14 @@ App.classy.controller
 
   init: ->
     @$.location = @$location
+    @$.activeNavId = "indices"
 
   watch:
     'location.path()': (path) ->
       @$.activeNavId = path || '/'
 
   getClass: (id) ->
-    if @$.activeNavId.substring(0, id.length) == id
+    if @$.activeNavId == id
       return 'active'
     else
       return ''
