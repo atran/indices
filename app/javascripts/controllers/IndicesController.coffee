@@ -9,6 +9,7 @@ App.classy.controller
     @$.activeIndex = null
     @$.sortedActiveIndex = null
     @$.activeItem = null
+    @$.sliderWidth = { width: '9001px' }
 
     @index1 = 
       title: "This is an example title."
@@ -26,11 +27,16 @@ App.classy.controller
 
   _onActiveIndexChange: () ->
     @$.sortedActiveIndex = @sortActiveIndex()
+    numOfLetters = Object.keys(@$.sortedActiveIndex).length
+    widthOfLetter = 345
+    @$.sliderWidth = { width: numOfLetters * widthOfLetter + 'px'}
 
   setActiveIndex: (index) ->
     @$.activeIndex = index
     @$.activeItem = null
     @$.sortedActiveIndex = @sortActiveIndex()
+    @$.setIndexPanelActive() 
+    @$.setItemPanelActive()
 
   setActiveItem: (item) ->
     @$.activeItem = _.findWhere(@$.activeIndex.items, item)

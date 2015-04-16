@@ -18,7 +18,7 @@ html(lang='en', ng-app='app')
     script(src='/js/vendor.js')
     script(src='/js/app.templates.js')
     script(src='/js/app.js')
-  body(ng-controller='AppCtrl')
+  body(ng-controller='AppCtrl', ng-class="{ 'index-panel-active': indexPanelActive, 'item-panel-active': itemPanelActive }")
     main#main(ng-view)
     nav#main-nav
       div(ng-include="'app/partials/nav.jade'")

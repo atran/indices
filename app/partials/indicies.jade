@@ -1,4 +1,5 @@
 div.indices(ng-controller='IndicesCtrl')
+  .go-back-to-indices(ng-click='setIndexPanelInactive()')
   hr.decoration
   .indices-listing
     ul
@@ -6,19 +7,20 @@ div.indices(ng-controller='IndicesCtrl')
         h3(ng-click='setActiveIndex(index)')
           {{index.title}}&nbsp;&rarr;
 
-  .active-index(ng-show="activeIndex !== null")
+  .active-index
     .index-controls
       a.collapse-all(ng-click="collapseActiveIndex()") Collapse
       span /
       a.expand-all(ng-click="expandActiveIndex()") Expand
       span All
-    .index-description
-      {{activeIndex.description}}
-    ol.index-listing
-      li.alpha-listing(ng-repeat="(k, v) in sortedActiveIndex | orderBy: 'k'")
+    .index-meta
+      h3.index-title {{activeIndex.title}}
+      .index-description {{activeIndex.description}}
+    ol.index-listing(ng-style="sliderWidth")
+      li.alpha-listing(ng-repeat="(k, v) in sortedActiveIndex | orderBy: k")
         span {{k.toUpperCase()}}.
         ul(class="letter-listing")
-          li(ng-repeat="item in v")
+          li(ng-repeat="item in v", ng-class="{'active': activeItem == item}")
             p(ng-click='setActiveItem(item)') {{item.text}}&nbsp;&rarr;
             ol.subindex-listing
               li(ng-repeat='subitem in item.subitems | orderBy')
@@ -34,7 +36,7 @@ div.indices(ng-controller='IndicesCtrl')
       input(type='text', ng-model='newIndex', placeholder='Add an index title', autofocus)
       textarea(ng-model='newIdxDesc', placeholder="Provide a description (optional)")
       input(type='submit', value='add')
-    form#add-item.add-something(ng-submit='addItem()', ng-show="activeIndex !== null")
+    form#add-item.add-something(ng-submit='addItem()')
       input(type='text', ng-model='newItem', placeholder='Add an index')
       input(type='submit', value='add')
     form#add-subitem.add-something(ng-submit='addSubItem()', ng-show="activeItem !== null")

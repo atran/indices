@@ -105,12 +105,17 @@ main > div
   .active-item
     border-right 0 none
     left 66.6666%
+  
     
 .active-index
+  .index-title
+    padding-bottom 10px
+    line-height 1.33em
   .index-description
     border-bottom 1px solid #000
-    padding-bottom 10px
+    padding-bottom 30px
     margin-bottom 10px
+    
 
 .add-something
   position fixed
@@ -170,7 +175,11 @@ main > div
     margin-right 5px
 
 .index-listing
+  overflow auto
+  padding-top 30px
   .alpha-listing
+    width 345px
+    float left
     > span
       display block
       margin-bottom 5px
@@ -188,7 +197,90 @@ main > div
 .url-listing
   list-style square
   margin-left 1em
+
+.go-back-to-indices
+  width 33%
+  position fixed
+  left 0
+  top 0
+  height 100%
+  background-color #000
+  position relative
+  &:after
+    content '>'
+    display block
+    position absolute
+    color #fff
+    transform translate(-50%, -50%)
+    top 50%
+    left 50%
   
+#main-nav 
+  transition opacity 333ms linear 666ms
+  opacity 1
+  
+.indices
+  .go-back-to-indices
+    transition opacity 333ms linear, width 333ms linear 300ms
+    opacity 0
+    z-index 1
+  .indices-listing
+  #add-index
+    transition width 333ms linear 111ms
+    opacity 1
+    z-index 11
+  .active-index 
+  #add-item
+  #add-subitem
+    transition left 333ms linear 300ms, width 333ms linear 300ms
+    opacity 0
+  .index-meta
+  .index-listing
+  .index-controls
+    opacity 0
+    transition opacity 333ms linear 777ms
+  
+.index-panel-active.item-panel-active #main-nav
+  opacity 0
+  pointer-events none
+  transition opacity 333ms linear
+
+.index-panel-active.item-panel-active .indices
+  .go-back-to-indices
+    opacity 1
+    width 5%
+    z-index 101
+    transition opacity 333ms linear, width 333ms linear 111ms
+  .indices-listing
+  #add-index
+    opacity 0
+    width 5%
+    transition opacity 333ms linear, width 333ms linear 111ms
+  .active-index
+  #add-item
+  #add-subitem
+    width 61.66666%
+    left 5%
+    transition left 333ms linear 111ms, width 333ms linear 111ms
+
+    
+.item-panel-active
+  #main-nav
+    transition opacity 333ms linear 777ms
+  .active-index
+  #add-item
+  #add-subitem
+  .index-meta
+  .index-listing
+  .index-controls
+    opacity 1
+  .go-back-to-indices
+      transition opacity 333ms linear 333ms, width 333ms linear 300ms
+  .indices
+    .indices-listing
+    #add-index
+      transition opacity 333ms linear 777ms, width 333ms linear 300ms
+
 .about-wrapper
   padding 60px 100px
   font-size 48px

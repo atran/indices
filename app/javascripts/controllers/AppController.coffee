@@ -7,6 +7,8 @@ App.classy.controller
   init: ->
     @$.location = @$location
     @$.activeNavId = "indices"
+    @$.indexPanelActive = false
+    @$.itemPanelActive = false
 
   watch:
     'location.path()': (path) ->
@@ -17,3 +19,15 @@ App.classy.controller
       return 'active'
     else
       return ''
+
+  setIndexPanelActive: ->
+    @$.indexPanelActive = true
+
+  setIndexPanelInactive: ->
+    @$.indexPanelActive = false
+
+  setItemPanelActive: ->
+    @$.itemPanelActive = true
+
+  setItemPanelInactive: ->
+    @$.itemPanelActive = false
