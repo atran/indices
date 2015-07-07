@@ -2,7 +2,7 @@ App.classy.controller
 
   name: 'IndicesCtrl'
 
-  inject: ['$scope', '$http', 'filterFilter']
+  inject: ['$scope', '$http', '$firebaseArray', 'filterFilter']
 
   init: ->
     @$.indices = []
@@ -11,14 +11,10 @@ App.classy.controller
     @$.activeItem = null
     @$.sliderWidth = { width: '9001px' }
 
-    @index1 = 
-      title: "This is an example title."
-      description: "This is the an example description."
-      items: []
+    indicesRef = new Firebase('https://brilliant-inferno-1524.firebaseio.com/')
+    @$.indices = @$firebaseArray(indicesRef)
 
-    @$.indices.push(@index1)
-
-  watch: 
+  watch:
     '{object}indices': '_onIndicesChange'
     '{object}activeIndex': '_onActiveIndexChange'
 
@@ -26,16 +22,17 @@ App.classy.controller
     @$.remaining = @filterFilter(@indices, {done: false}).length
 
   _onActiveIndexChange: () ->
-    @$.sortedActiveIndex = @sortActiveIndex()
-    numOfLetters = Object.keys(@$.sortedActiveIndex).length
-    widthOfLetter = 345
-    @$.sliderWidth = { width: numOfLetters * widthOfLetter + 'px'}
+    if @$.activeIndex?
+      @$.sortedActiveIndex = @sortActiveIndex()
+      numOfLetters = Object.keys(@$.sortedActiveIndex).length
+      widthOfLetter = 345
+      @$.sliderWidth = { width: numOfLetters * widthOfLetter + 'px'}
 
   setActiveIndex: (index) ->
     @$.activeIndex = index
     @$.activeItem = null
     @$.sortedActiveIndex = @sortActiveIndex()
-    @$.setIndexPanelActive() 
+    @$.setIndexPanelActive()
     @$.setItemPanelActive()
 
   setActiveItem: (item) ->
@@ -45,7 +42,7 @@ App.classy.controller
     newIndex = @$.newIndex.trim()
     newIdxDesc = @$.newIdxDesc.trim()
     if !newIndex.length then return
-    @$.indices.push
+    @$.indices.$add
       title: newIndex
       description: newIdxDesc
       items: []
@@ -54,12 +51,15 @@ App.classy.controller
     @$.newIdxDesc = ""
 
   sortActiveIndex: ->
-    _.groupBy(@$.activeIndex.items, (item) ->
-      str = item.text[0].toLowerCase()
-      if not (str.length is 1 && str.match(/[a-z]/i))
-        str = "*"
-      str
-    )
+    if @$.activeIndex?
+      sortedItems = _.sortBy(@$.activeIndex.items, (item) -> item.text[0].toLowerCase())
+      _.groupBy(sortedItems, (item) ->
+        str = item.text[0].toLowerCase()
+        if not (str.length is 1 && str.match(/[a-z]/i))
+          str = "*"
+        str
+      )
+
 
   collapseActiveIndex: ->
     $(".letter-listing").slideUp()
@@ -70,35 +70,42 @@ App.classy.controller
   addItem: ->
     newItem = @$.newItem.trim()
     if !newItem.length then return
+    if not @$.activeIndex.items?
+      @$.activeIndex.items = []
     @$.activeIndex.items.push
       text: newItem
       links: []
       subitems: []
+    @$.indices.$save(@$.activeIndex)
     @$.newItem = ""
 
   addSubItem: ->
     newSubItem = @$.newSubItem.trim()
     if !newSubItem.length then return
+    if not @$.activeItem.subitems?
+      @$.activeItem.subitems = []
     @$.activeItem.subitems.push(newSubItem)
-
+    @$.indices.$save(@$.activeIndex)
     @$.newSubItem = ""
 
-  goToAlpha: (e) -> 
-    $("#target-" + e).velocity("scroll", container: $(".active-index")) 
+  goToAlpha: (e) ->
+    $("#target-" + e).velocity("scroll", container: $(".active-index"))
 
   addLink: ->
     newLink = @$.newLink.trim()
     newLinkWoProtocol = newLink.replace(/.*?:\/\//g, "") #remove http
     if !newLink.length then return
-
+    if not @$.activeItem.links?
+      @$.activeItem.links = []
     @$http
     .get('http://textance.herokuapp.com/title/' + newLinkWoProtocol)
-    .success( 
+    .success(
       (data) =>
         @$.activeItem.links.push
           title: data
           url: newLink
         @$.newLink = ""
+        @$.indices.$save(@$.activeIndex)
     )
     .error(
       () =>
@@ -106,9 +113,10 @@ App.classy.controller
           title: newLink
           url: newLink
         @$.newLink = ""
+        @$.indices.$save(@$.activeIndex)
     )
 
-    
+
 
 
 

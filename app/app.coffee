@@ -6,6 +6,7 @@ App = angular.module('app', [
   'ngResource'
   'ngRoute'
   'classy'
+  'firebase'
   'app.directives'
   'app.filters'
   'app.services'

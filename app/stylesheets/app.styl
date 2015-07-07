@@ -22,26 +22,26 @@ h1,h2,h3
   font-size 36px
   line-height 1.3em
   text-transform uppercase
-  
+
 h3
   font-size 33px
   line-height 1.3em
-  
+
 a
   text-decoration none
   color #0000ff
   &:hover
     border-bottom 1px solid currentColor
     color #4CAF50
-    
+
 button
   cursor pointer
-    
+
 [ng-click]
   cursor pointer
   &:hover
     color #4CAF50
-    
+
 .active
 [ng-click]:hover.active
   color #4CAF50
@@ -53,7 +53,7 @@ textarea
   padding 5px 10px
   &:focus
     outline none
-  
+
 input[type=submit]
   background #fff
   border none
@@ -72,11 +72,11 @@ main > div
   padding-top 10px
   li
     float left
-    margin-right 5px  
+    margin-right 5px
     &:last-child:before
       content "/"
       margin-right 5px
-  
+
 .decoration
   border 0
   background-color #000
@@ -86,8 +86,8 @@ main > div
   left 0
   width 100%
   margin 0
-  z-index 101  
-  
+  z-index 101
+
 .indices
   .indices-listing,
   .active-index,
@@ -105,8 +105,8 @@ main > div
   .active-item
     border-right 0 none
     left 66.6666%
-  
-    
+
+
 .active-index
   .index-title
     padding-bottom 10px
@@ -115,7 +115,7 @@ main > div
     border-bottom 1px solid #000
     padding-bottom 30px
     margin-bottom 10px
-    
+
 
 .add-something
   position fixed
@@ -150,7 +150,7 @@ main > div
     width 50px
     height 50px
     border-radius 50px
-    
+
 #add-index
   padding-bottom 12px
   input[type=submit]
@@ -166,7 +166,7 @@ main > div
   &#add-link
     left 66.66666%
     border-right 0 none
-    
+
 .index-controls
   position absolute
   top 10px
@@ -180,7 +180,7 @@ main > div
     display block
     padding 5px .33%
     text-transform uppercase
-    
+
 
 .index-listing
   overflow auto
@@ -200,15 +200,15 @@ main > div
       margin-bottom 5px
     .letter-listing
       margin-bottom 5px
-  
+
 .letter-listing
   margin-left 1em
 
-.subindex-listing 
+.subindex-listing
   margin-left 2.5em
   font-size .8em
   list-style upper-latin
-  
+
 .url-listing
   list-style square
   margin-left 1em
@@ -229,11 +229,11 @@ main > div
     transform translate(-50%, -50%)
     top 50%
     left 50%
-  
-#main-nav 
+
+#main-nav
   transition opacity 333ms linear 666ms
   opacity 1
-  
+
 .indices
   .go-back-to-indices
     transition opacity 333ms linear, width 333ms linear 300ms
@@ -244,7 +244,7 @@ main > div
     transition width 333ms linear 111ms
     opacity 1
     z-index 11
-  .active-index 
+  .active-index
   #add-item
   #add-subitem
     transition left 333ms linear 300ms, width 333ms linear 300ms
@@ -254,12 +254,13 @@ main > div
   .index-controls
     opacity 0
     transition opacity 333ms linear 777ms
-  
+
 .index-panel-active.item-panel-active #main-nav
   opacity 0
   pointer-events none
   transition opacity 333ms linear
 
+/*
 .index-panel-active.item-panel-active .indices
   .go-back-to-indices
     opacity 1
@@ -277,8 +278,8 @@ main > div
     width 61.66666%
     left 5%
     transition left 333ms linear 111ms, width 333ms linear 111ms
+*/
 
-    
 .item-panel-active
   #main-nav
     transition opacity 333ms linear 777ms

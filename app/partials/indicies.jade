@@ -20,7 +20,7 @@ div.indices(ng-controller='IndicesCtrl')
       h3.index-title {{activeIndex.title}}
       .index-description {{activeIndex.description}}
     ol.index-listing(ng-style="sliderWidth")
-      li.alpha-listing(ng-repeat="(k, v) in sortedActiveIndex | orderBy: k", id="target-{{k}}")
+      li.alpha-listing(ng-repeat="(k, v) in sortedActiveIndex | orderBy:'k'", id="target-{{k}}")
         span {{k.toUpperCase()}}.
         ul(class="letter-listing")
           li(ng-repeat="item in v", ng-class="{'active': activeItem == item}")
@@ -31,7 +31,7 @@ div.indices(ng-controller='IndicesCtrl')
 
   .active-item(ng-show="activeItem !== null")
     ul.url-listing
-      li(ng-repeat='link in activeItem.links') 
+      li(ng-repeat='link in activeItem.links')
         a(ng-href="{{link.url}}", target="_blank") {{link.title}}
 
   .forms
