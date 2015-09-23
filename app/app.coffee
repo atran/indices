@@ -21,12 +21,17 @@ App.config([
 ($routeProvider, $locationProvider, config) ->
 
   $routeProvider
-
-    .when('/indices', {templateUrl: 'app/partials/indicies.jade'})
     .when('/about', {templateUrl: 'app/partials/about.jade'})
-
+    .when('/read', {templateUrl: 'app/partials/read.jade'})
+    .when('/write', {templateUrl: 'app/partials/write.jade'})
+    .when('/read/:indexId', {
+      templateUrl: 'app/partials/read-detail.jade'
+    })
+    .when('/write/:indexId', {
+      templateUrl: 'app/partials/write-detail.jade'
+    })
     # Catch all
-    .otherwise({redirectTo: '/indices'})
+    .otherwise({redirectTo: '/about'})
 
   # Without server side support html5 must be disabled.
   $locationProvider.html5Mode(false)

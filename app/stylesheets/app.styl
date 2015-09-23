@@ -24,15 +24,16 @@ h1,h2,h3
   text-transform uppercase
 
 h3
-  font-size 33px
+  font-size 24px
   line-height 1.3em
+  margin-bottom 10px
 
 a
   text-decoration none
-  color #0000ff
+  color #000
   &:hover
     border-bottom 1px solid currentColor
-    color #4CAF50
+    color #d3007e
 
 button
   cursor pointer
@@ -40,11 +41,13 @@ button
 [ng-click]
   cursor pointer
   &:hover
-    color #4CAF50
+    color #d3007e
 
 .active
+.toggled
 [ng-click]:hover.active
-  color #4CAF50
+.active a
+  color #d3007e
 
 input[type=text],
 input[type=url],
@@ -70,12 +73,17 @@ main > div
   left 10px
   top 0
   padding-top 10px
+  width 100%
+  ul
+    width 33%
+    padding-right 1%
   li
     float left
-    margin-right 5px
-    &:last-child:before
-      content "/"
-      margin-right 5px
+    width 30%
+    &:nth-child(2)
+      text-align center
+    &:nth-child(3)
+      text-align right
 
 .decoration
   border 0
@@ -230,81 +238,19 @@ main > div
     top 50%
     left 50%
 
-#main-nav
-  transition opacity 333ms linear 666ms
-  opacity 1
-
-.indices
-  .go-back-to-indices
-    transition opacity 333ms linear, width 333ms linear 300ms
-    opacity 0
-    z-index 1
-  .indices-listing
-  #add-index
-    transition width 333ms linear 111ms
-    opacity 1
-    z-index 11
-  .active-index
-  #add-item
-  #add-subitem
-    transition left 333ms linear 300ms, width 333ms linear 300ms
-    opacity 0
-  .index-meta
-  .index-listing
-  .index-controls
-    opacity 0
-    transition opacity 333ms linear 777ms
-
-.index-panel-active.item-panel-active #main-nav
-  opacity 0
-  pointer-events none
-  transition opacity 333ms linear
-
-/*
-.index-panel-active.item-panel-active .indices
-  .go-back-to-indices
-    opacity 1
-    width 5%
-    z-index 101
-    transition opacity 333ms linear, width 333ms linear 111ms
-  .indices-listing
-  #add-index
-    opacity 0
-    width 5%
-    transition  width 333ms linear 111ms
-  .active-index
-  #add-item
-  #add-subitem
-    width 61.66666%
-    left 5%
-    transition left 333ms linear 111ms, width 333ms linear 111ms
-*/
-
-.item-panel-active
-  #main-nav
-    transition opacity 333ms linear 777ms
-    pointer-events auto
-  .active-index
-  #add-item
-  #add-subitem
-  .index-meta
-  .index-listing
-  .index-controls
-    opacity 1
-  .go-back-to-indices
-      transition opacity 333ms linear 333ms, width 333ms linear 300ms
-  .indices
-    .indices-listing
-    #add-index
-      transition opacity 333ms linear 777ms, width 333ms linear 300ms
-
 .about-wrapper
-  padding 60px 100px
-  font-size 48px
+  padding 10%
+  font-size 36px
   line-height 1.3em
+  .about
+    width 800px
+    padding 10px
+    margin 0 auto
+    display block
 
 // Partials
 @import "partials/_partial1.styl";
+@import "partials/_read.styl";
 
 // For SHAME
 @import "_shame.styl";

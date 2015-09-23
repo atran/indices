@@ -15,7 +15,8 @@ App.classy.controller
       @$.activeNavId = path || '/'
 
   getClass: (id) ->
-    if @$.activeNavId == id
+    rx = new RegExp("^"+ id, "g")
+    if rx.test(@$.activeNavId)
       return 'active'
     else
       return ''

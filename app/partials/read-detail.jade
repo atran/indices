@@ -1,0 +1,16 @@
+div.indices.read-detail(ng-controller='ReadDetailCtrl')
+  hr.decoration
+  .indices-listing.read-content
+    h3 {{index.title}}
+    .content
+      {{index.description}}
+  .active-index
+    ul.letters
+      li.alpha-listing(ng-repeat="(k, v) in groupedItemsByLetter | orderBy:'k'", id="target-{{k}}") {{k.toUpperCase()}}
+  .active-item
+    ul.index-items
+      li(ng-repeat="(k, v) in sortedItems | orderBy:'k'", id="target-{{k}}")
+        h5(ng-init="v.toggled = false", ng-click="v.toggled = !v.toggled", ng-class="{'toggled': v.toggled && v.subitems.length > 0, 'togglable': v.subitems.length > 0}") {{v.text}}
+        ul.index-subitems
+          li(ng-repeat="s in v.subitems")
+            h6 {{s}}

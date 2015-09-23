@@ -1,0 +1,8 @@
+div.indices(ng-controller='IndicesCtrl')
+  hr.decoration
+  .indices-listing
+    ul
+      li(ng-repeat='index in indices', ng-class="{'active': activeIndex == index}")
+        h3
+          a(href="/#/read/{{index.$id}}")
+            ...{{index.title}}
